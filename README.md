@@ -1,20 +1,21 @@
-# Interview Briefing Toolkit
+# Charlie · Analyst Toolkit
 
-分析师研究的三模式工具包：生成访谈手持问题清单、汇总单一分析师全覆盖观点、构建结构化研报 PPTX。
+分析师研究四模式工具包：访谈提纲 / 全覆盖观点汇总 / 研报 PPTX / 单篇深度转述。
 
-## 三模式
+## 四模式
 
 | 模式 | 你需要什么 | 输出 |
 |------|-----------|------|
 | **A · 访谈提纲** | 跟分析师/管理层/KOL开会时要问什么 | 手持问题清单（三组件：背景→双语Q&A→缺口矩阵） + PDF |
 | **B · 全覆盖观点汇总** | 理解一个分析师的全部覆盖观点——哪些 top pick、观点怎么变的、beat了什么miss了什么、未来6个月催化剂有哪些 | 全景文档（7 个固定板块：分析师画像→覆盖矩阵→逐家详解→观点变化→Beat/Miss记分卡→催化剂日历→模式分析） + PDF |
 | **C · 研报 PPTX** | 基于目标公司研报 PDF 和参考模版，生成结构化公司深度 slides | 32-41 页 PPTX + Markdown 文字底稿 + 图片建议清单。7 大板块（行业/公司基本情况/核心业务分析/竞争分析/其他/财务及盈利预测/估值分析），格式严格匹配参考模版（字体/字号/加粗/表格/对齐） |
+| **D · 单篇深度转述** | 领导不想读英文，把一篇卖方研报转成结构化中文摘要 | 结构化中文 Markdown（8-10 板块：元信息→一句话总结→背景→科学底层→证据链→竞争格局→报告定位→数据卡片）+ 可选 PDF |
 
 ## 快速开始
 
 ```bash
-git clone https://github.com/Charliewei0825/interview-briefing-toolkit.git
-cd interview-briefing-toolkit
+git clone https://github.com/Charliewei0825/charlie-analyst-toolkit.git
+cd charlie-analyst-toolkit
 ```
 
 ### 安装依赖
@@ -28,11 +29,11 @@ pip install python-pptx              # 模式 C: PPTX 生成
 ### 注册为 Claude Code Skill
 
 ```bash
-mkdir -p ~/.claude/skills
-cp SOP.md ~/.claude/skills/interview-briefing-sop.md
+mkdir -p ~/.claude/skills/charlie-analyst-toolkit
+cp -r . ~/.claude/skills/charlie-analyst-toolkit/
 ```
 
-在 Claude Code 中输入 `/interview-briefing-sop` 即可加载全部规范。加载后会自动确认你要模式 A / B / C。
+在 Claude Code 中输入 `/charlie-analyst-toolkit` 即可加载全部规范。加载后会自动确认你要模式 A / B / C / D。
 
 ### 生成第一份文档
 
@@ -48,19 +49,23 @@ cp template-summary.md my-coverage-summary.md
 # 模式 C：研报 PPTX
 # 在 Claude Code 中输入：
 # "帮我写一份 XX 公司的研报 PPT，参考这个模版 [模版路径]，研报在 [研报目录]"
+
+# 模式 D：单篇深度转述
+# 在 Claude Code 中直接拖入 PDF 或输入：
+# "领导不想读英文，把这篇报告给他讲一遍 [PDF路径]"
 ```
 
 ## 包里有什么
 
 | 文件 | 用途 |
 |------|------|
-| `SOP.md` | **完整参考手册**：三模式全部细节、示例、故障排查 |
-| `SKILL.md` | **操作摘要**：三模式核心流程、格式骨架、核对清单（Claude Code skill 入口） |
+| `SOP.md` | **完整参考手册**：四模式全部细节、示例、故障排查 |
+| `SKILL.md` | **操作摘要**：四模式核心流程、格式骨架、核对清单（Claude Code skill 入口） |
 | `template.md` | 模式 A 骨架空模版（访谈提纲） |
 | `template-summary.md` | 模式 B 骨架空模版（全覆盖观点汇总） |
 | `style.css` | PDF 渲染样式（深蓝配色、中文字体） |
 | `pdf-pipeline.sh` | 一行命令 Markdown → PDF |
-| `checklist.md` | 提交前核对清单（模式 A 15 项 + 模式 B 10 项 + 模式 C 15 项） |
+| `checklist.md` | 提交前核对清单（模式 A/B/C/D） |
 | `INSTALL.md` | 详细安装指南（含 Typora 主题配置） |
 
 ## 致谢
@@ -101,6 +106,18 @@ cp template-summary.md my-coverage-summary.md
 
 格式规范由用户提供的参考 PPTX 模版决定，不可凭记忆猜测。文风规则：直接、朴实、具体——禁止比喻、明喻、暗喻、排比、夸张。
 
+## 模式 D 输出格式
+
+单篇英文研报 → 结构化中文转述，8-10 个板块：
+
+1. 报告元信息（标题/机构/作者/日期/评级/PT + 报告时vs当前股价）
+2. 一句话总结（领导 10 秒理解主旨）
+3-N. 按报告逻辑递进的核心内容（行业背景→科学底层→证据链→试验设计→竞争格局→估值）
+N+1. 报告定位与局限（系列第几篇？没覆盖什么？）
+最末. 关键数据卡片（股价/市值/评级/催化剂/核心假设参数，一页速查）
+
+核心原则：不是翻译，是信息重建。补充暗默知、表格化对比数据、标注报告局限、原文化学术语保留英文。
+
 ## 适用场景
 
 - 卖方分析师访谈（问模型参数、排序、监管判断）
@@ -109,3 +126,4 @@ cp template-summary.md my-coverage-summary.md
 - 机构股东访谈（问持仓逻辑、仓位配置）
 - 分析师全覆盖研究（总结单一分析师多标的、跨年度观点演变）
 - 公司深度研报 PPTX（研报文件夹 + 参考模版 → 结构化 slides）
+- 英文研报中文转述（领导不读英文，需要结构化摘要 + 事实核实）
